@@ -1,0 +1,26 @@
+{
+  "name": "performance-monitor",
+  "version": "1.0.0",
+  "description": "realtime cpu performance monitor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrsalvation/performance-monitor.git"
+  },
+  "author": "moksh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrsalvation/performance-monitor/issues"
+  },
+  "homepage": "https://github.com/mrsalvation/performance-monitor#readme",
+  "dependencies": {
+    "farmhash": "^3.2.1",
+    "socket.io": "^4.0.0",
+    "socket.io-client": "^4.0.0",
+    "socket.io-redis": "^6.1.0",
+    "socketio": "^1.0.0"
+  }
+}
