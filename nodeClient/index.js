@@ -1,9 +1,11 @@
-const { uptime, cpus, totalmem, freemem } = require("os");
+const { uptime, cpus, totalmem, freemem, networkInterfaces } = require("os");
 const io = require("socket.io-client");
 let socket = io("http://127.0.0.1:8181");
 
 socket.on("connect", () => {
   console.log("I connected to the server");
+  const nI = networkInterfaces();
+  let macA;
 });
 
 const performanceData = async () => {
