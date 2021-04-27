@@ -6,6 +6,25 @@ socket.on("connect", () => {
   console.log("I connected to the server");
   const nI = networkInterfaces();
   let macA;
+  for (let key in nI) {
+    if (!nI[key][0].internal) {
+      macA = nI[key][0].mac;
+      break;
+    }
+  }
+
+  socket.emit("clientAuth", "afdafdafafds");
+
+  let perfDataInterval = setInterval(() => {
+    performanceData().then((e) => {
+      console.log(e);
+      socket.emit("perfData", e);
+    });
+  }, 1000);
+
+  socket.on("disconnect", () => {
+    clearInterval(perfDataInterval);
+  }); //clear out the older setInterval
 });
 
 const performanceData = async () => {

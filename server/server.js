@@ -21,7 +21,7 @@ if (cluster.isMaster) {
     spawn(i);
   }
   const worker_index = function (ip, len) {
-    return farmhash.fingerprint32(ip) % len;
+    return farmhash.fingerprint32(ip) % len; //the worker index is dependent on the ip addr
   };
 
   const server = net.createServer({ pauseOnConnect: true }, (connection) => {
@@ -37,8 +37,8 @@ if (cluster.isMaster) {
 
   io.adapter(io_redis({ host: "localhost", port: 6379 }));
   io.on("connection", function (socket) {
-    socketMain(io, socket);
     console.log(`connected to worker: ${cluster.worker.id}`);
+    socketMain(io, socket);
   });
   process.on("message", function (message, connection) {
     if (message !== "sticky-session:connection") {
@@ -49,5 +49,3 @@ if (cluster.isMaster) {
     connection.resume();
   });
 }
-
-socketMain("", "");
