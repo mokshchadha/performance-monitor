@@ -1,6 +1,6 @@
 const { uptime, cpus, totalmem, freemem, networkInterfaces } = require("os");
 const io = require("socket.io-client");
-let socket = io("http://127.0.0.1:8181");
+let socket = io("https://localhost:8181");
 
 socket.on("connect", () => {
   console.log("I connected to the server");
@@ -13,14 +13,18 @@ socket.on("connect", () => {
     }
   }
 
-  socket.emit("clientAuth", "afdafdafafds");
+  socket.emit("clientAuth", "mokshchadha");
+  performanceData().then((e) => {
+    e.macA = macA;
+    socket.emit("initPerfData", e);
+  });
 
   let perfDataInterval = setInterval(() => {
     performanceData().then((e) => {
       console.log(e);
       socket.emit("perfData", e);
     });
-  }, 1000);
+  }, 5000);
 
   socket.on("disconnect", () => {
     clearInterval(perfDataInterval);
