@@ -1,38 +1,41 @@
-const Machine = require("./models/Machine");
-const { CLIENT_IDS, UI_IDS } = require("./constants");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1/perfData", {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-});
-let macA = "";
+
+mongoose.connect("mongodb://127.0.0.1/perfData", { useNewUrlParser: true });
+
+const Machine = require("./models/Machine");
+
 function socketMain(io, socket) {
-  console.log("in here, socket main ", socket.id);
-  if (socket.id) {
-    socket.on("clientAuth", (key) => {
-      console.log("the key is ", key);
-      if (CLIENT_IDS.includes(key)) {
-        console.log("node client ", key, " has joined");
-        socket.join("clients");
-      } else if (UI_IDS.includes(key)) {
-        console.log("react client ", key, " has joined");
-        socket.join("ui");
-      } else socket.disconnect(true);
-    });
-    socket.on("initPerfData", async (data) => {
-      macA = data.macA;
-      const response = await checkAndAdd(data);
-    });
-    socket.on("perfData", (d) => {
-      io.to("ui").emit("data", d);
-    });
-  }
+  let macA;
+  socket.on("clientAuth", (key) => {
+    if (key === "moksh16531") {
+      socket.join("clients");
+    } else if (key === "ui_moksh16531") {
+      socket.join("ui_clients"); // joining a room allows us to communincate with that particular group
+    } else {
+      console.log("Invalid client has joined", key);
+      socket.disconnect(true);
+    }
+  });
+
+  socket.on("initPerfData", (data) => {
+    macA = data.macA;
+    checkAndAdd(data);
+  });
+
+  socket.on("perfData", (data) => {
+    console.log(data);
+    io.to("ui_clients").emit("data", data);
+  });
 }
 
 async function checkAndAdd(data) {
   const res = await Machine.findOne({ macA: data.macA });
-  console.log(res);
-  return res ?? new Machine(data).save();
+  if (!res) {
+    let newMachine = new Machine(data);
+    newMachine.save();
+  }
 }
 
-module.exports = { socketMain };
+module.exports = socketMain;
+
+// HENCE by creating rooms we can allow and send notifications based on our user group requirements

@@ -1,7 +1,7 @@
 {
   "name": "nodeclient",
   "version": "1.0.0",
-  "description": "this is the node client",
+  "description": "node client for performance monitor",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,8 +10,9 @@
   "author": "moksh",
   "license": "ISC",
   "dependencies": {
-    "farmhash": "^3.2.1",
-    "nodemon": "^2.0.7",
-    "socket.io-client": "^4.0.1"
+    "farmhash": "^3.3.0",
+    "nodemon": "^2.0.22",
+    "socket.io-client": "^4.6.1",
+    "socket.io-redis": "^6.1.1"
   }
 }

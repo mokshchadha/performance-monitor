@@ -1,20 +1,19 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "server for the performance monitor",
-  "main": "server.js",
+  "description": "server for performance monitor",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "moksh",
+  "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
-    "farmhash": "^3.2.1",
-    "mongoose": "^5.12.5",
-    "nodemon": "^2.0.7",
-    "socket.io": "^4.0.1",
-    "socket.io-redis": "^6.1.0"
+    "express": "^4.18.2",
+    "farmhash": "^3.3.0",
+    "mongoose": "^7.1.0",
+    "nodemon": "^2.0.22",
+    "socket.io": "^4.6.1",
+    "socket.io-redis": "^6.1.1"
   }
 }

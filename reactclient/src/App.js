@@ -1,26 +1,23 @@
-import React from "react";
+import { useEffect } from "react";
 import "./App.css";
-import socket from "./utilities/socketConnection";
+import io from "socket.io-client";
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      performanceData: {},
-    };
-  }
+import Widget from "./Widget";
 
-  componentDidMount() {
-    socket.emit("clientAuth", "mokshreact");
-  }
+const socket = io.connect("http://localhost:8181");
 
-  render() {
-    return (
-      <div className="App">
-        <h1>Sanity check</h1>
-      </div>
-    );
-  }
+function App() {
+  useEffect(() => {
+    console.log(socket.id);
+    socket.on("data", (d) => console.log(d));
+    return () => {};
+  }, []);
+
+  return (
+    <div className="App">
+      <Widget />
+    </div>
+  );
 }
 
 export default App;
